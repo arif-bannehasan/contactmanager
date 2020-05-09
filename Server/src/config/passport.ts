@@ -1,15 +1,16 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import passportFacebook from "passport-facebook";
+import OAuthStrategy from "passport-google-oauth";
 import _ from "lodash";
 
-// testing changes to master branch
 // import { User, UserType } from '../models/User';
 import { User, UserDocument } from "../models/User";
 import { Request, Response, NextFunction } from "express";
 
 const LocalStrategy = passportLocal.Strategy;
 const FacebookStrategy = passportFacebook.Strategy;
+const GoogleStrategy = OAuthStrategy;
 
 passport.serializeUser<any, any>((user, done) => {
     done(undefined, user.id);
@@ -20,6 +21,10 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
+
+// passport.use(new GoogleStrategy(){
+        
+// })
 
 
 /**
@@ -125,7 +130,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect("/login");
+    return res.status(404).send("User was not found");
 };
 
 /**
