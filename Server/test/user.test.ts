@@ -2,9 +2,9 @@ import request from "supertest";
 import app from "../src/app";
 import { expect } from "chai";
 
-describe("GET /login", () => {
+describe("GET user/login", () => {
     it("should return 200 OK", () => {
-        return request(app).get("/login")
+        return request(app).get("user/login")
             .expect(200);
     });
 });
@@ -31,9 +31,9 @@ describe("GET /reset", () => {
     });
 });
 
-describe("POST /login", () => {
+describe("POST user/login", () => {
     it("should return some defined error message with valid parameters", (done) => {
-        return request(app).post("/login")
+        return request(app).post("user/login")
             .field("email", "john@me.com")
             .field("password", "Hunter2")
             .expect(302)
